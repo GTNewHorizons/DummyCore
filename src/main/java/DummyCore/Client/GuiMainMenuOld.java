@@ -21,10 +21,10 @@ import net.minecraftforge.client.ForgeHooksClient;
 import org.apache.commons.io.Charsets;
 import org.lwjgl.opengl.GL11;
 
-import DummyCore.Utils.IMainMenu;
-
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+
+import DummyCore.Utils.IMainMenu;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class GuiMainMenuOld extends GuiMainMenu implements IMainMenu {
