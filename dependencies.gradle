@@ -1,1 +1,3 @@
-dependencies {}
+dependencies {
+    compileOnly(rfg.deobf("curse.maven:endlessids-665730:7585931"))
+}
