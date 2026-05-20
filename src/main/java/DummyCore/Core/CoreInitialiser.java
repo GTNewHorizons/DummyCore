@@ -1,10 +1,11 @@
 package DummyCore.Core;
 
-import java.lang.reflect.Method;
-
 import net.minecraft.command.CommandHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import DummyCore.Utils.CommandTransfer;
 import DummyCore.Utils.DummyConfig;
@@ -16,6 +17,7 @@ import DummyCore.Utils.DummyPacketIMSG_Tile;
 import DummyCore.Utils.DummyTilePacketHandler;
 import DummyCore.Utils.NetProxy_Server;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
@@ -43,6 +45,8 @@ public class CoreInitialiser {
     public static final String modname = "DummyCore";
     public static final String version = Tags.VERSION;
 
+    public static final Logger logger = LogManager.getLogger(modid);
+
     public static CoreInitialiser instance;
     public static DummyConfig cfg = new DummyConfig();
     public static SimpleNetworkWrapper network;
@@ -51,6 +55,8 @@ public class CoreInitialiser {
     public static NetProxy_Server proxy;
 
     public static final DummyPacketHandler packetHandler = new DummyPacketHandler();
+
+    public static boolean ENDLESS_IDS_LOADED = false;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
@@ -64,24 +70,14 @@ public class CoreInitialiser {
         try {
             Core.registerModAbsolute(getClass(), "DummyCore", e.getModConfigurationDirectory().getAbsolutePath(), cfg);
         } catch (Exception ex) {
-            System.out.println("Oh, come on Forge. If something has got wrong here - this is it.");
-            System.out.println("No, reriously, if an exception is bbeing thrown here - nothing is going to load");
-            System.out.println("Like, even the gam itself, since an exception here means File System error.");
-            System.out.println("And a file system error here -> impossible to create literally any file in directory!");
-            System.out.println("But when I'm trying to set a System.exit(-1) here - oww, not allowed?");
-            System.out.println("Fine, I can work without it... Reflection time!");
-            try {
-                Class<System> system = System.class;
-                Method exit = system.getMethod("exit", int.class);
-                exit.invoke(null, -1);
-            } catch (Exception exc) {
-                exc.printStackTrace();
-                return;
-            }
+            logger.error("Unable to register DummyCore", ex);
+            throw new RuntimeException(ex);
         }
         MinecraftForge.EVENT_BUS.register(new DummyEventHandler());
         MinecraftForge.EVENT_BUS.register(new DummyDataUtils());
         FMLCommonHandler.instance().bus().register(new DummyEventHandler());
+
+        ENDLESS_IDS_LOADED = Loader.isModLoaded("endlessids");
 
         proxy.registerInfo();
     }

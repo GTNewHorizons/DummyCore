@@ -55,6 +55,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.falsepattern.endlessids.mixin.helpers.ChunkBiomeHook;
+
 import DummyCore.Core.CoreInitialiser;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.relauncher.ReflectionHelper;
@@ -121,7 +123,7 @@ public class MiscUtils {
 
     /**
      * Used to bind texture from the mod. First string is the mod id, and the second is the texture path.
-     * 
+     *
      * @version From DummyCore 1.0
      * @param mod     - the in-code modname. always use small letters!
      * @param texture - path to your thexture.
@@ -139,7 +141,7 @@ public class MiscUtils {
 
     /**
      * Creates a new NBTTagCompound for the given ItemStack
-     * 
+     *
      * @version From DummyCore 1.0
      * @param stack - the ItemStack to work with.
      */
@@ -153,7 +155,7 @@ public class MiscUtils {
 
     /**
      * used to get the ItemStack's tag compound.
-     * 
+     *
      * @version From DummyCore 1.0
      * @param stack - the ItemStack to work with.
      * @return NBTTagCompound of the ItemStack
@@ -165,7 +167,7 @@ public class MiscUtils {
 
     /**
      * Used to drop items from IInventory when the block is broken.
-     * 
+     *
      * @version From DummyCore 1.0
      * @param par1World - the World object
      * @param par2      - X coordinate of the block
@@ -226,7 +228,7 @@ public class MiscUtils {
 
     /**
      * Used to check, if the Forge Ore Dictionary contains the given name in it.
-     * 
+     *
      * @version From DummyCore 1.4
      * @param oreName - the ore name to search
      * @return true if OreDictionary cantains the given ore, false if not.
@@ -237,7 +239,7 @@ public class MiscUtils {
 
     /**
      * Used to sync the given tile entity with the given side using DummyCore packet handler.
-     * 
+     *
      * @version From DummyCore 1.4
      * @param t - the tileentity to sync.
      * @param s - the side, that will accept the packet.
@@ -309,7 +311,7 @@ public class MiscUtils {
 
     /**
      * Used to add custom description to any items. Useful if you do not want to create whole bunch of events?
-     * 
+     *
      * @version From DummyCore 1.7
      * @param unlocalisedName - The name of the item(the unlocalized one) to apply the description for. Not sure, why
      *                        this exist, guess for more convenience?
@@ -323,7 +325,7 @@ public class MiscUtils {
 
     /**
      * Used to add custom description to any items. Useful if you do not want to create whole bunch of events?
-     * 
+     *
      * @version From DummyCore 1.7
      * @param id    - The id of the item to apply the description for.
      * @param meta  - The metadate of the item to apply the description for.
@@ -337,7 +339,7 @@ public class MiscUtils {
 
     /**
      * Used to send packets from SERVER to CLIENT.
-     * 
+     *
      * @version From DummyCore 1.7
      * @param w        - the worldObj that we are operating in
      * @param pkt      - the packet to send
@@ -375,7 +377,7 @@ public class MiscUtils {
 
     /**
      * Used to send packets from SERVER to CLIENT.
-     * 
+     *
      * @version From DummyCore 1.7
      * @param w        - the worldObj that we are operating in
      * @param distance - the distance at which the players will get found.
@@ -398,7 +400,7 @@ public class MiscUtils {
 
     /**
      * Used to send packets from SERVER to CLIENT.
-     * 
+     *
      * @version From DummyCore 1.7
      * @param w     - the worldObj that we are operating in
      * @param pkt   - the packet to send
@@ -424,7 +426,7 @@ public class MiscUtils {
 
     /**
      * Used to send packets from SERVER to CLIENT.
-     * 
+     *
      * @version From DummyCore 1.7
      * @param w      - the worldObj that we are operating in
      * @param pkt    - the packet to send
@@ -446,7 +448,7 @@ public class MiscUtils {
 
     /**
      * Used to draw a textured rectangle using the given IIcon
-     * 
+     *
      * @param x      - the X coordinate on the screen. Should be bound to the ScaledResolution
      * @param y      - the Y coordinate on the screen. Should be bound to the ScaledResolution
      * @param icon   - the icon itself
@@ -484,7 +486,7 @@ public class MiscUtils {
 
     /**
      * Used to draw a textured rectangle using the given IIcon
-     * 
+     *
      * @param x      - the X coordinate on the screen. Should be bound to the ScaledResolution
      * @param y      - the Y coordinate on the screen. Should be bound to the ScaledResolution
      * @param icon   - the icon itself
@@ -522,7 +524,7 @@ public class MiscUtils {
 
     /**
      * Used to draw a textured rectangle using the given IIcon
-     * 
+     *
      * @param x      - the X coordinate on the screen. Should be bound to the ScaledResolution
      * @param y      - the Y coordinate on the screen. Should be bound to the ScaledResolution
      * @param icon   - the icon itself
@@ -543,7 +545,7 @@ public class MiscUtils {
 
     /**
      * Used to draw a textured rectangle using the given IIcon
-     * 
+     *
      * @param x      - the X coordinate on the screen. Should be bound to the ScaledResolution
      * @param y      - the Y coordinate on the screen. Should be bound to the ScaledResolution
      * @param icon   - the icon itself
@@ -571,7 +573,7 @@ public class MiscUtils {
     /**
      * Used to check if the given class actually has the named method. Used when working with APIs of different
      * mods(actually not)
-     * 
+     *
      * @param c       - the class
      * @param mName   - the name of the method
      * @param classes - actual parameters of the method
@@ -588,7 +590,7 @@ public class MiscUtils {
 
     /**
      * Have you ever thought that saving inventories to NBTTag takes too much code? Here is a nifty solution to do so!
-     * 
+     *
      * @param t       - the TileEntity
      * @param saveTag - the tag
      */
@@ -611,7 +613,7 @@ public class MiscUtils {
     /**
      * Have you ever thought that loading inventories from NBTTag takes too much code? Here is a nifty solution to do
      * so!
-     * 
+     *
      * @param t       - the TileEntity
      * @param loadTag - the tag
      */
@@ -636,7 +638,7 @@ public class MiscUtils {
     /**
      * Actually changes the BiomeGenBase at the given coordinates. It still requires Client to update the BlockRenderer
      * at the position!
-     * 
+     *
      * @param w     - World
      * @param biome - the biome you are changing to
      * @param x     - xCoordinate of the BLOCK
@@ -644,18 +646,23 @@ public class MiscUtils {
      */
     public static void changeBiome(World w, BiomeGenBase biome, int x, int z) {
         Chunk chunk = w.getChunkFromBlockCoords(x, z);
-        byte[] b = chunk.getBiomeArray();
-        byte cbiome = b[(z & 0xf) << 4 | x & 0xf]; // What is even going on here? Can this code be a little bit more
-                                                   // readable?
-        cbiome = (byte) (biome.biomeID & 0xff);
-        b[(z & 0xf) << 4 | x & 0xf] = cbiome; // Looks like not.
-        chunk.setBiomeArray(b);
+        if (CoreInitialiser.ENDLESS_IDS_LOADED) {
+            short[] b = ((ChunkBiomeHook) chunk).getBiomeShortArray();
+            short cbiome = (short) (biome.biomeID & 0xff_ff);
+            b[(z & 0xf) << 4 | x & 0xf] = cbiome;
+            ((ChunkBiomeHook) chunk).setBiomeShortArray(b);
+        } else {
+            byte[] b = chunk.getBiomeArray();
+            byte cbiome = (byte) (biome.biomeID & 0xff);
+            b[(z & 0xf) << 4 | x & 0xf] = cbiome;
+            chunk.setBiomeArray(b);
+        }
         notifyBiomeChange(x, z, biome.biomeID);
     }
 
     /**
      * Actually creates the given particles for ALL players
-     * 
+     *
      * @param particleName - the name of the particle
      * @param posX         - xCoord of the particle
      * @param posY         - yCoord of the particle
@@ -689,7 +696,7 @@ public class MiscUtils {
 
     /**
      * Actually draws a textured rectangle
-     * 
+     *
      * @param x        - first vertex U
      * @param y        - first vertex V
      * @param textureX - second vertex U
@@ -733,7 +740,7 @@ public class MiscUtils {
 
     /**
      * Renders the given ItemStack in the world. Call ONLY from render methods!
-     * 
+     *
      * @param stk        - ItemStack you wish to render
      * @param posX       - xCoord in the world
      * @param posY       - yCoord in the world
@@ -909,7 +916,7 @@ public class MiscUtils {
 
     /**
      * Sub-function to the first one. You shouldn't use this, however it is also possible.
-     * 
+     *
      * @param stk         - ItemStack you wish to render
      * @param posX        - xCoord in the world
      * @param posY        - yCoord in the world
@@ -1057,7 +1064,7 @@ public class MiscUtils {
 
     /**
      * Clones the given Entity, including it's full NBTTag
-     * 
+     *
      * @param e - the entity to clone
      * @return The cloned entity
      */
@@ -1075,7 +1082,7 @@ public class MiscUtils {
     /**
      * Changes biome at the given coordinates. Unlike the previous function this one takes the biomeID, not the biome
      * itself and isn't world dependant
-     * 
+     *
      * @param x       - x position of the block
      * @param z       - z position of the block
      * @param biomeID - the new BiomeID
@@ -1097,7 +1104,7 @@ public class MiscUtils {
     /**
      * Imitates the armor absorbption for the given damage. Can be used, if you damage your target inderectly, but still
      * want the damage to get reduced by armor
-     * 
+     *
      * @param base   - The damaged Entity
      * @param dam    - the damage source
      * @param amount - the amount of the damage
@@ -1114,7 +1121,7 @@ public class MiscUtils {
 
     /**
      * Imitates the damage increasement by things like Strength potion and Sharpness|Power enchantments.
-     * 
+     *
      * @param base   - The damaged Entity
      * @param dam    - the damage source
      * @param amount - the amount of the damage
@@ -1157,7 +1164,7 @@ public class MiscUtils {
 
     /**
      * Damages the given Entity ignoring the Forge EntityHurt and EntityBeeingDamaged events.
-     * 
+     *
      * @param base   - The damaged Entity
      * @param dam    - the damage source
      * @param amount - the amount of the damage
@@ -1187,7 +1194,7 @@ public class MiscUtils {
      * matter the protection given. This should not be done. However, in vanilla MC it is pretty much the only way to do
      * so, so I can't help it. The only thing, that would be worse is using ASM to remotely change the compiled final
      * variable. That is the most disgusting thing you can do with Java, I believe.
-     * 
+     *
      * @param classToAccess - the class in wich you are changing the variable
      * @param instance      - if you want to modify non-static field you should put the instance of the class here.
      *                      Leave null for static
@@ -1212,7 +1219,7 @@ public class MiscUtils {
     /**
      * Extends the default mc potionArray(which is declared as public static final Potion[] potionTypes = new
      * Potion[32]) by the given amount
-     * 
+     *
      * @param byAmount - how much to extends for
      * @return the first free index in the new potionArray.
      */
@@ -1238,7 +1245,7 @@ public class MiscUtils {
 
     /**
      * Sets the block at the given coordinates to unbreakable || breakable
-     * 
+     *
      * @param w      - the World
      * @param x      - the x of the block
      * @param y      - the y of the block
@@ -1262,7 +1269,7 @@ public class MiscUtils {
 
     /**
      * Checks if the block at the given coordinates is unbreakable
-     * 
+     *
      * @param w - the World
      * @param x - the x of the block
      * @param y - the y of the block
@@ -1281,7 +1288,7 @@ public class MiscUtils {
     /**
      * Sends the packet to the server, that notifies the server about GUI button pressed. This can be actually used for
      * any GUI, not only in world, but why would you like to do it?
-     * 
+     *
      * @param buttonID    - the ID on the button in the code. Can be get via yourGuiButton.id
      * @param parentClass - the GUI class, that contains the button
      * @param buttonClass - the GUI class of the button
@@ -1297,7 +1304,7 @@ public class MiscUtils {
     /**
      * Sends the packet to the server, that notifies the server about GUI button pressed. This can be actually used for
      * any GUI, not only in world, but why would you like to do it?
-     * 
+     *
      * @param buttonID       - the ID on the button in the code. Can be get via yourGuiButton.id
      * @param parentClass    - the GUI class, that contains the button
      * @param buttonClass    - the GUI class of the button
@@ -1334,7 +1341,7 @@ public class MiscUtils {
 
     /**
      * Searches for the first block, that matches the given condition at the given coordinates in the given Y range.
-     * 
+     *
      * @param w                  - the WorldObj where we are searching the block at
      * @param toSearch           - the block that we are searching for
      * @param x                  - the X coordinate

@@ -17,8 +17,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
+import com.falsepattern.endlessids.mixin.helpers.ChunkBiomeHook;
+
 import DummyCore.Client.GuiButton_ChangeGUI;
 import DummyCore.Client.MainMenuRegistry;
+import DummyCore.Core.CoreInitialiser;
 import DummyCore.Events.DummyEvent_OnClientGUIButtonPress;
 import DummyCore.Events.DummyEvent_OnKeyboardKeyPressed_Server;
 import DummyCore.Events.DummyEvent_OnPacketRecieved;
@@ -126,11 +129,17 @@ public class DummyEventHandler {
                     int id = Integer.parseInt(packetData[3].fieldValue);
                     World world = event.recievedEntity.worldObj;
                     Chunk chunk = world.getChunkFromBlockCoords(x, z);
-                    byte[] biome = chunk.getBiomeArray();
-                    int cbiome = biome[(z & 0xf) << 4 | x & 0xf];
-                    cbiome = id & 0xff;
-                    biome[(z & 0xf) << 4 | x & 0xf] = (byte) cbiome;
-                    chunk.setBiomeArray(biome);
+                    if (CoreInitialiser.ENDLESS_IDS_LOADED) {
+                        short[] biome = ((ChunkBiomeHook) chunk).getBiomeShortArray();
+                        int cbiome = id & 0xff_ff;
+                        biome[(z & 0xf) << 4 | x & 0xf] = (short) cbiome;
+                        ((ChunkBiomeHook) chunk).setBiomeShortArray(biome);
+                    } else {
+                        byte[] biome = chunk.getBiomeArray();
+                        int cbiome = id & 0xff;
+                        biome[(z & 0xf) << 4 | x & 0xf] = (byte) cbiome;
+                        chunk.setBiomeArray(biome);
+                    }
                     world.markBlocksDirtyVertical(x, z, 16, 16);
                 }
                 if (modData.fieldName.equalsIgnoreCase("mod")
